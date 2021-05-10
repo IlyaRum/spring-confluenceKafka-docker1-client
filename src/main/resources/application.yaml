@@ -1,0 +1,11 @@
+server:
+  port: 8888
+spring:
+  kafka:
+    bootstrap-servers: 192.168.99.102:9092
+    producer:
+      client-id: example
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    listener:
+      ack-mode: manual_immediate
