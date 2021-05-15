@@ -12,33 +12,15 @@ import java.util.concurrent.ExecutionException;
 @RestController
 public class Controller {
 
-    private final com.example.springkafkadocker.client.Producer producer;
-
-    private final Logger logger = LoggerFactory.getLogger(Controller.class);
+    private final Producer producer;
 
     public Controller(Producer producer) {
         this.producer = producer;
     }
 
-    @PostMapping("/publish")
-    public void writeMessageToTopic(@RequestParam("message") String message){
-        this.producer.writeMessage(message);
-
-    }
-
     @PostMapping("/test")
-    public void send(@RequestParam("message") String message) throws ExecutionException, InterruptedException {
+    public void sendAvroMessage(@RequestParam("message") String message) {
+        this.producer.sendAvroMessage("my_topic", "IN_KEY", message);
 
-        ListenableFuture<SendResult<String, String>> listenableFuture = this.producer.sendMessage("my_topic", "IN_KEY", message);
-
-        SendResult<String, String> result = listenableFuture.get();
-        logger.info(String.format("Produced message:\nmessage: %s\ntopic: %s\noffset: %d\npartition: %d\nvalue size: %d",
-                message,
-                result.getRecordMetadata().topic(),
-                result.getRecordMetadata().offset(),
-                result.getRecordMetadata().partition(),
-                result.getRecordMetadata().serializedValueSize()
-        ));
     }
-
 }
