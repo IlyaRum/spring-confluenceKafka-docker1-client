@@ -2,10 +2,13 @@ server:
   port: 8888
 spring:
   kafka:
-    bootstrap-servers: 192.168.99.102:9092
-    producer:
-      client-id: example
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-    listener:
-      ack-mode: manual_immediate
+    bootstrap-servers: 192.168.99.104:9092
+    #bootstrap-servers: localhost:9092
+    consumer:
+      group-id: my_group_id
+    #producer:
+      #client-id: example
+      #key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      #value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    #listener:
+      #ack-mode: manual_immediate
